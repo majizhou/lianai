@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>响应式静态网页</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background-image: url("sakura.gif");
+      background-size: cover;
+    }
+    .content {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+ 
+    <div class="content">
+      <h1>我们相恋了</h1>
+      <h2 id="countdown"></h2>
+      <div id="love-words"></div>
+      <audio autoplay loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+  
+  <script src="moment.min.js"></script>
+  <script src="love-words.js"></script>
+  <script>
+    // 计算我们相恋的时间
+    var startDate = moment("2021-11-20");
+    setInterval(function() {
+      var now = moment();
+      var duration = moment.duration(now.diff(startDate));
+      var days = Math.floor(duration.asDays());
+      var hours = Math.floor(duration.asHours()) % 24;
+      var minutes = Math.floor(duration.asMinutes()) % 60;
+      var seconds = Math.floor(duration.asSeconds()) % 60;
+      var countdownText = days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
+      document.getElementById("countdown").textContent = countdownText;
+    }, 1000);
+    
+    // 弹出情话
+    var loveWords = generateLoveWords();
+    setInterval(function() {
+      var index = Math.floor(Math.random() * loveWords.length);
+      document.getElementById("love-words").textContent = loveWords[index];
+      setTimeout(function() {
+        document.getElementById("love-words").textContent = "";
+      }, 10000);
+    }, 15000);
+  </script>
+  
+</body>
+</html>
